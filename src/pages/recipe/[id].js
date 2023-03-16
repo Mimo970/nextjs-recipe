@@ -1,3 +1,4 @@
+import { useTheme } from "next-themes";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Layout from "../../../components/Layout";
@@ -6,6 +7,7 @@ const Recipe = ({ recipe }) => {
   const [details, setDetails] = useState(recipe);
   const router = useRouter();
   const { id } = router.query;
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -22,14 +24,36 @@ const Recipe = ({ recipe }) => {
 
   return (
     <Layout>
-      <div className="bg-[#212124] p-4 mt-24">
-        <div className="bg-[#212124] container mx-auto">
+      <div
+        className={`${
+          theme === "dark" ? "bg-[#242526]" : "bg-zinc-100"
+        }  pt-36 pb-12`}
+      >
+        <div
+          className={`${
+            theme === "dark" ? "bg-zinc-900" : "bg-zinc-200"
+          } container mx-auto rounded-lg`}
+        >
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold mb-4">{details?.title}</h2>
+            <h2
+              className={`${
+                theme === "dark" ? "text-zinc-300" : "text-black"
+              } text-3xl font-bold mb-4`}
+            >
+              {details?.title}
+            </h2>
             <div className="mb-4">
-              <h3 className="text-lg font-bold mb-2">Summary</h3>
+              <h3
+                className={`${
+                  theme === "dark" ? "text-zinc-300" : "text-black"
+                } text-lg font-bold mb-2`}
+              >
+                Summary
+              </h3>
               <p
-                className=" text-gray-400"
+                className={`${
+                  theme === "dark" ? "text-zinc-400" : "text-black"
+                } container mx-auto rounded-lg`}
                 dangerouslySetInnerHTML={{ __html: details?.summary }}
               ></p>
             </div>
@@ -42,15 +66,32 @@ const Recipe = ({ recipe }) => {
             </div>
             <div className="pb-4">
               <div className="flex items-center mb-2">
-                <p className="text-lg font-bold mr-2">Ready In:</p>
+                <p
+                  className={`${
+                    theme === "dark" ? "text-zinc-300" : "text-black"
+                  } text-lg font-bold mr-2`}
+                >
+                  Ready In:
+                </p>
                 <p className="text-lg">{details?.readyInMinutes} Minutes</p>
               </div>
               <div className="mb-4">
-                <h3 className="text-lg font-bold mb-2">Ingredients</h3>
+                <h3
+                  className={`${
+                    theme === "dark" ? "text-zinc-300" : "text-black"
+                  } text-lg font-bold mb-2`}
+                >
+                  Ingredients
+                </h3>
                 <ul>
                   {details?.extendedIngredients?.map((ingredient) => {
                     return (
-                      <li key={ingredient.id} className="mb-1 text-gray-400">
+                      <li
+                        key={ingredient.id}
+                        className={`mb-1 ${
+                          theme === "dark" ? "text-zinc-400" : "text-black"
+                        } container mx-auto rounded-lg`}
+                      >
                         {ingredient.original}
                       </li>
                     );
@@ -58,9 +99,17 @@ const Recipe = ({ recipe }) => {
                 </ul>
               </div>
               <div>
-                <h3 className="text-lg font-bold mb-2">Instructions</h3>
+                <h3
+                  className={`${
+                    theme === "dark" ? "text-zinc-300" : "text-black"
+                  } text-lg font-bold mb-2`}
+                >
+                  Instructions
+                </h3>
                 <div
-                  className="text-gray-400"
+                  className={`${
+                    theme === "dark" ? "text-zinc-400" : "text-black"
+                  } container mx-auto rounded-lg`}
                   dangerouslySetInnerHTML={{ __html: details?.instructions }}
                 ></div>
               </div>

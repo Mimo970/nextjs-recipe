@@ -1,9 +1,22 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useContext } from "react";
 import Main from "../../components/Main";
+import { AuthContext } from "../../contexts/AuthContext";
 
 // const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const router = useRouter();
+  const { currentUser } = useContext(AuthContext);
+
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      router.push("/login");
+      return null;
+    }
+    return children;
+  };
   return (
     <>
       <Head>
@@ -13,8 +26,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        {/* <Main /> */}
-        yo
+        <ProtectedRoute>
+          <Main />
+        </ProtectedRoute>
       </div>
     </>
   );

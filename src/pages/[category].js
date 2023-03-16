@@ -90,10 +90,12 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
+import { useTheme } from "next-themes";
 
 function Cuisine({ cuisine }) {
   const router = useRouter();
   const { category } = router.query;
+  const { theme, setTheme } = useTheme();
 
   // console.log(category);
 
@@ -149,7 +151,11 @@ function Cuisine({ cuisine }) {
         </div>
       </Layout> */}
       <Layout>
-        <div className="p-4 grid grid-cols-1 mt-24">
+        <div
+          className={`${
+            theme === "dark" ? "bg-[#242526]" : "bg-zinc-100"
+          } p-4 grid grid-cols-1 mt-24`}
+        >
           <span className="text-3xl font-semibold col-span-fll text-center mb-4">
             {category}{" "}
           </span>
@@ -159,25 +165,30 @@ function Cuisine({ cuisine }) {
           </span> */}
           <div className="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center col-start-1 row-start-2">
             {cuisine.map((item) => {
-              console.log(item);
+              {
+                /* console.log(item); */
+              }
               return (
                 <div
                   key={item.id}
-                  className="bg-[#212124] h-full rounded-lg shadow-md relative max-w-sm"
+                  className={` ${
+                    theme === "dark"
+                      ? "bg-[#181818] shadow-md"
+                      : "bg-zinc-300 border-none shadow-md"
+                  } h-full rounded-lg shadow-md relative max-w-sm`}
                 >
-                  <Link legacyBehavior href={"recipe/" + item.id}>
-                    <a className="aspect-w-1 aspect-h-1 block rounded-t-lg overflow-hidden">
-                      <img
-                        className="object-cover w-full "
-                        src={item.image}
-                        alt={item.title}
-                      />
-                    </a>
-                  </Link>
+                  <div className="aspect-w-1 aspect-h-1 block rounded-t-lg overflow-hidden">
+                    <img
+                      className="object-cover w-full "
+                      src={item.image}
+                      alt={item.title}
+                    />
+                  </div>
+
                   <div className="p-4">
                     <h4 className="text-lg font-medium mb-2">{item.title}</h4>
                     <div className="flex items-center">
-                      <svg
+                      {/* <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-4 w-4 text-gray-600 mr-1"
                         viewBox="0 0 20 20"
@@ -193,8 +204,12 @@ function Cuisine({ cuisine }) {
                           d="M13.579 10.17a.5.5 0 01.707.707l-4.096 4.096a.5.5 0 01-.707 0L5.714 9.178a.5.5 0 01.707-.707l3.158 3.158 3.98-3.98z"
                           clipRule="evenodd"
                         />
-                      </svg>
-                      <span className="text-gray-600 text-sm">View Recipe</span>
+                      </svg> */}
+                      <Link legacyBehavior href={"recipe/" + item.id}>
+                        <span className="text-gray-600 text-sm cursor-pointer hover:underline">
+                          View Recipe
+                        </span>
+                      </Link>
                     </div>
                   </div>
                 </div>
